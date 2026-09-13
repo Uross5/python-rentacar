@@ -1,8 +1,8 @@
 from models.Db import Db
 
-class User(Db):
 
-    all_users=[]
+class User(Db):
+    all_users = []
 
     def __init__(self):
         super().__init__()
@@ -15,9 +15,9 @@ class User(Db):
 
     @name.setter
     def name(self, new_name):
-        split_name=new_name.split()
+        split_name = new_name.split()
 
-        if len(split_name)<2:
+        if len(split_name) < 2:
             raise ValueError("Name must be in format firs last name")
 
         self.__name = new_name
@@ -42,12 +42,12 @@ class User(Db):
         connection.commit()
         cursor.close()
 
-
-
-
-        # User.all_users.append([self.__name,self.__age])
-
-    @classmethod
-    def display_user(cls):
-        print(User.all_users)
-
+    def display_users(self):
+        connection = self._get_connection()
+        cursor = connection.cursor()
+        query = "SELECT * FROM users"
+        cursor.execute(query)
+        result = cursor.fetchall()
+        cursor.close()
+        for user in result:
+            print(user)
