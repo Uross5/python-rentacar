@@ -1,5 +1,5 @@
 from models.User import User
-
+from models.Car import Car
 available_options=[1,2,3,4]
 
 
@@ -17,4 +17,14 @@ if option == 1:
     user.name=name
     user.age=age
     user.create_user()
-    print(User.all_users)
+
+elif option == 2:
+   User.display_user()
+
+elif option == 3:
+    Car.display_available_cars()
+
+elif option == 4:
+    Car.display_occupied_cars()
+
+

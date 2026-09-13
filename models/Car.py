@@ -1,19 +1,19 @@
 class Car:
     allowed_cars = {
         "Audi": [
-            {"model": "A4", "production_year": 2004},
-            {"model": "A5", "production_year": 2003},
-            {"model": "A6", "production_year": 2002}
+            {"model": "A4", "production_year": 2004, "rented":True,"rented_until":None},
+            {"model": "A5", "production_year": 2003, "rented":False,"rented_until":None},
+            {"model": "A6", "production_year": 2002, "rented":False,"rented_until":None}
         ],
         "BMW": [
-            {"model": "M3", "production_year": 2008},
-            {"model": "M5", "production_year": 2010},
-            {"model": "M8", "production_year": 2019}
+            {"model": "M3", "production_year": 2008, "rented":False,"rented_until":None},
+            {"model": "M5", "production_year": 2010, "rented":False,"rented_until":None},
+            {"model": "M8", "production_year": 2019, "rented":True,"rented_until":None}
         ],
         "Mercedes": [
-            {"model": "GLK", "production_year": 2015},
-            {"model": "GLE", "production_year": 2017},
-            {"model": "GLC", "production_year": 2016}
+            {"model": "GLK", "production_year": 2015, "rented":False,"rented_until":None},
+            {"model": "GLE", "production_year": 2017, "rented":False,"rented_until":None},
+            {"model": "GLC", "production_year": 2016, "rented":False,"rented_until":None}
         ]
     }
 
@@ -61,3 +61,23 @@ class Car:
         if self.__model is not None and self.__brand is not None:
             raise ValueError("Production year cannot be set")
         self.__production_year = year
+
+    @classmethod
+    def display_available_cars(cls):
+        for brand in Car.allowed_cars:
+            cars = Car.allowed_cars[brand]
+            for car in cars:
+                if car["rented"] == False:
+                    print(f"{brand} {car['model']} ({car['production_year']})")
+
+    @classmethod
+    def display_occupied_cars(cls):
+        for brand in Car.allowed_cars:
+            cars = Car.allowed_cars[brand]
+            for car in cars:
+                if car["rented"] == True:
+                    print(f"{brand} {car['model']} ({car['production_year']})")
+
+
+
+

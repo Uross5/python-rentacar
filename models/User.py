@@ -14,13 +14,13 @@ class User(Db):
         return self.__name
 
     @name.setter
-    def name(self, newName):
-        split_name=newName.split()
+    def name(self, new_name):
+        split_name=new_name.split()
 
         if len(split_name)<2:
             raise ValueError("Name must be in format firs last name")
 
-        self.__name = newName
+        self.__name = new_name
 
     @property
     def age(self):
@@ -37,4 +37,8 @@ class User(Db):
             raise ValueError("Name and age cannot be None")
 
         User.all_users.append([self.__name,self.__age])
+
+    @classmethod
+    def display_user(cls):
+        print(User.all_users)
 
