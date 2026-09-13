@@ -1,4 +1,3 @@
-
 class Car:
     allowed_cars = {
         "Audi": [
@@ -18,24 +17,23 @@ class Car:
         ]
     }
 
-
     def __init__(self):
-        self.__brand=None
-        self.__model=None
-        self.__production_year=None
+        self.__brand = None
+        self.__model = None
+        self.__production_year = None
 
-    #Getter
+    # Getter
     @property
     def model(self):
         return self.__model
 
     @model.setter
-    def model(self,model):
+    def model(self, model):
         if self.__brand is None:
             raise ValueError("set the brand first")
-        valid_models=Car.allowed_cars[self.__brand]
+        valid_models = Car.allowed_cars[self.__brand]
         for car in valid_models:
-            if model==car["model"]:
+            if model == car["model"]:
                 self.__model = model
                 self.__production_year = car["production_year"]
                 return
@@ -47,32 +45,19 @@ class Car:
         return self.__brand
 
     @brand.setter
-    def brand(self,brand):
+    def brand(self, brand):
         if brand not in Car.allowed_cars:
             raise ValueError("Invalid brand")
-        self.__brand=brand
+        self.__brand = brand
 
     @property
     def production_year(self):
         return self.__production_year
 
     @production_year.setter
-    def production_year(self,year):
+    def production_year(self, year):
         if self.__production_year is None:
             raise ValueError("Invalid production year")
         if self.__model is not None and self.__brand is not None:
             raise ValueError("Production year cannot be set")
-        self.__production_year=year
-
-
-
-
-
-
-
-
-
-
-
-
-
+        self.__production_year = year
