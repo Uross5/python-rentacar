@@ -1,0 +1,9 @@
+CREATE DATABASE IF NOT EXISTS rentacar;
+USE rentacar;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(256) NOT NULL,
+    age INT NOT NULL,
+    PRIMARY KEY (id)
+);

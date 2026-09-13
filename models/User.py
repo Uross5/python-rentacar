@@ -35,8 +35,17 @@ class User(Db):
     def create_user(self):
         if self.__name is None or self.__age is None:
             raise ValueError("Name and age cannot be None")
+        connection = self._get_connection()
+        cursor = connection.cursor()
+        query = "INSERT INTO users(name,age) VALUES(%s,%s)"
+        cursor.execute(query, (self.__name, self.__age))
+        connection.commit()
+        cursor.close()
 
-        User.all_users.append([self.__name,self.__age])
+
+
+
+        # User.all_users.append([self.__name,self.__age])
 
     @classmethod
     def display_user(cls):
