@@ -66,21 +66,28 @@ class Car(Db):
             raise ValueError("Production year cannot be set")
         self.__production_year = year
 
-    @classmethod
-    def display_available_cars(cls):
-        for brand in Car.allowed_cars:
-            cars = Car.allowed_cars[brand]
-            for car in cars:
-                if car["rented"] == False:
-                    print(f"{brand} {car['model']} ({car['production_year']})")
 
-    @classmethod
-    def display_occupied_cars(cls):
-        for brand in Car.allowed_cars:
-            cars = Car.allowed_cars[brand]
-            for car in cars:
-                if car["rented"] == True:
-                    print(f"{brand} {car['model']} ({car['production_year']})")
+    def display_available_cars(self):
+        connection=self._get_connection()
+        cursor=connection.cursor()
+        query="SELECT * FROM cars WHERE rented=FALSE"
+        cursor.execute(query)
+        cars=cursor.fetchall()
+        cursor.close()
+        for car in cars:
+            print(car)
+
+
+    def display_occupied_cars(self):
+        connection=self._get_connection()
+        cursor=connection.cursor()
+        query="SELECT * FROM cars WHERE rented= TRUE"
+        cursor.execute(query)
+        cars=cursor.fetchall()
+        cursor.close()
+        for car in cars:
+            print(car)
+
 
     def insert_cars_into_db(self):
         connection=self._get_connection()

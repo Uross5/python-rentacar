@@ -1,8 +1,6 @@
 from models.Car import Car
 from models.User import User
 
-#car=Car()
-#car.insert_cars_into_db()
 
 available_options = [1, 2, 3, 4]
 
@@ -26,8 +24,10 @@ elif option == 2:
     user.display_users()
 
 elif option == 3:
-    Car.display_available_cars()
+    car=Car()
+    car.display_available_cars()
 
 elif option == 4:
-    Car.display_occupied_cars()
+    car=Car()
+    car.display_occupied_cars()
 
