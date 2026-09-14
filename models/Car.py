@@ -1,23 +1,27 @@
-class Car:
+from models.Db import Db
+
+
+class Car(Db):
     allowed_cars = {
         "Audi": [
-            {"model": "A4", "production_year": 2004, "rented":True,"rented_until":None},
-            {"model": "A5", "production_year": 2003, "rented":False,"rented_until":None},
-            {"model": "A6", "production_year": 2002, "rented":False,"rented_until":None}
+            {"model": "A4", "production_year": 2004, "rented": True, "rented_until": None},
+            {"model": "A5", "production_year": 2003, "rented": False, "rented_until": None},
+            {"model": "A6", "production_year": 2002, "rented": False, "rented_until": None}
         ],
         "BMW": [
-            {"model": "M3", "production_year": 2008, "rented":False,"rented_until":None},
-            {"model": "M5", "production_year": 2010, "rented":False,"rented_until":None},
-            {"model": "M8", "production_year": 2019, "rented":True,"rented_until":None}
+            {"model": "M3", "production_year": 2008, "rented": False, "rented_until": None},
+            {"model": "M5", "production_year": 2010, "rented": False, "rented_until": None},
+            {"model": "M8", "production_year": 2019, "rented": True, "rented_until": None}
         ],
         "Mercedes": [
-            {"model": "GLK", "production_year": 2015, "rented":False,"rented_until":None},
-            {"model": "GLE", "production_year": 2017, "rented":False,"rented_until":None},
-            {"model": "GLC", "production_year": 2016, "rented":False,"rented_until":None}
+            {"model": "GLK", "production_year": 2015, "rented": False, "rented_until": None},
+            {"model": "GLE", "production_year": 2017, "rented": False, "rented_until": None},
+            {"model": "GLC", "production_year": 2016, "rented": False, "rented_until": None}
         ]
     }
 
     def __init__(self):
+        super().__init__()
         self.__brand = None
         self.__model = None
         self.__production_year = None
@@ -78,6 +82,12 @@ class Car:
                 if car["rented"] == True:
                     print(f"{brand} {car['model']} ({car['production_year']})")
 
-
-
-
+    def insert_cars_into_db(self):
+        connection=self._get_connection()
+        cursor=connection.cursor()
+        query="INSERT INTO cars (brand,model,production_year,rented,rented_until)VALUES(%s,%s,%s,%s,%s)"
+        for brand in Car.allowed_cars:
+            for car in Car.allowed_cars[brand]:
+                cursor.execute(query,(brand,car["model"],car["production_year"],car["rented"],car["rented_until"]))
+        connection.commit()
+        cursor.close()

@@ -7,3 +7,14 @@ CREATE TABLE IF NOT EXISTS users (
     age INT NOT NULL,
     PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS cars (
+    id INT NOT NULL AUTO_INCREMENT,
+    brand VARCHAR(128) NOT NULL,
+    model VARCHAR(128) NOT NULL,
+    production_year INT NOT NULL,
+    rented BOOLEAN NOT NULL DEFAULT FALSE,
+    rented_until DATE NULL,
+    PRIMARY KEY (id)
+    UNIQUE (brand,model)
+);

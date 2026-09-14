@@ -1,6 +1,9 @@
 from models.Car import Car
 from models.User import User
 
+#car=Car()
+#car.insert_cars_into_db()
+
 available_options = [1, 2, 3, 4]
 
 print("Choose one of the following options:")
@@ -27,3 +30,4 @@ elif option == 3:
 
 elif option == 4:
     Car.display_occupied_cars()
+
