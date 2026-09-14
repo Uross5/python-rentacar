@@ -8,9 +8,13 @@ available_options = [1, 2, 3, 4, 5, 6]
 while True:
 
     print("Choose one of the following options:")
-    option = int(input(" 1. Add a user\n 2. Display users\n "
+    try:
+        option = int(input(" 1. Add a user\n 2. Display users\n "
                        "3. Show available cars\n 4. Show occupied cars\n "
                        "5. Rent a car\n 6. Exit\n"))
+    except ValueError:
+        print("Please enter a valid option")
+        continue
 
     if option not in available_options:
         print("Invalid option. Please choose one of the following options:")
