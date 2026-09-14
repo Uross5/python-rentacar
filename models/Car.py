@@ -87,7 +87,11 @@ class Car(Db):
         cars=cursor.fetchall()
         cursor.close()
         for car in cars:
-            print(car)
+            rented_until=car[5].strftime("%Y-%m-%d %H:%M:%S")
+            remaining_time=self.get_remaining_rental_time(car[5])
+            print(f"id -> [{car[0]}]  {car[1]} {car[2]} ({car[3]}) - rented until {rented_until}, "
+                  f"remaining time: {remaining_time}")
+
 
 
     def insert_cars_into_db(self):
@@ -124,8 +128,17 @@ class Car(Db):
         connection.commit()
         cursor.close()
 
+    @staticmethod
+    def get_remaining_rental_time(rented_until_date):
+        remaining_time=rented_until_date - datetime.now()
+        hours_left=int(remaining_time.total_seconds()/3600)
 
-    # def rent_car(self):
-    #     connection=self._get_connection()
-    #     cursor=connection.cursor()
-    #     query
+        if hours_left <= 0:
+            return ("Rental expired")
+        elif hours_left <24:
+            return f"{hours_left} hours left"
+        else:
+            return f"{remaining_time.days} Days left until return "
+
+
+
