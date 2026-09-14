@@ -1,12 +1,14 @@
 from models.Car import Car
 from models.User import User
+from datetime import datetime
 
 
-available_options = [1, 2, 3, 4]
+available_options = [1, 2, 3, 4,5]
 
 print("Choose one of the following options:")
 option = int(input(" 1. Add a user\n 2. Display users\n "
-                   "3. Show available cars\n 4. Show occupied cars\n"))
+                   "3. Show available cars\n 4. Show occupied cars\n "
+                   "5. Rent a car\n"))
 
 if option not in available_options:
     raise ValueError("Invalid option")
@@ -31,3 +33,14 @@ elif option == 4:
     car=Car()
     car.display_occupied_cars()
 
+elif option == 5:
+    car=Car()
+    car.display_available_cars()
+    car_id=int(input("Enter your car id: "))
+    selected_car=car.get_available_car_by_id(car_id)
+    # print(selected_car)
+    user_rent_until=input("Until when would you like to rent your car? Please use format YYYY-MM-DD HH:MM:SS\n" )
+    rented_until_date=datetime.strptime(user_rent_until,"%Y-%m-%d %H:%M:%S")
+    # print(rented_until_date)
+    car.validate_rental_date(rented_until_date)
+    car.rent_car(car_id,rented_until_date)

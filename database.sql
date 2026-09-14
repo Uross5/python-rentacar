@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS cars (
     model VARCHAR(128) NOT NULL,
     production_year INT NOT NULL,
     rented BOOLEAN NOT NULL DEFAULT FALSE,
-    rented_until DATE NULL,
+    rented_until DATETIME NULL,
     PRIMARY KEY (id)
     UNIQUE (brand,model)
 );

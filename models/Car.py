@@ -1,4 +1,5 @@
 from models.Db import Db
+from datetime import datetime
 
 
 class Car(Db):
@@ -98,3 +99,33 @@ class Car(Db):
                 cursor.execute(query,(brand,car["model"],car["production_year"],car["rented"],car["rented_until"]))
         connection.commit()
         cursor.close()
+
+    def get_available_car_by_id(self,car_id):
+        connection=self._get_connection()
+        cursor=connection.cursor()
+        query="SELECT * FROM cars WHERE id=%s and rented=FALSE"
+        cursor.execute(query,(car_id,))
+        car=cursor.fetchone()
+        cursor.close()
+        if car is None:
+            raise ValueError("Car does not exist or is not available")
+        return car
+
+    @staticmethod
+    def validate_rental_date(rented_until_date):
+        if rented_until_date <= datetime.now():
+            raise ValueError("Rental end date must be in the future")
+
+    def rent_car(self,car_id,rented_until_date):
+        connection=self._get_connection()
+        cursor=connection.cursor()
+        query="UPDATE cars SET rented=TRUE, rented_until=%s WHERE id=%s"
+        cursor.execute(query,(rented_until_date,car_id))
+        connection.commit()
+        cursor.close()
+
+
+    # def rent_car(self):
+    #     connection=self._get_connection()
+    #     cursor=connection.cursor()
+    #     query
